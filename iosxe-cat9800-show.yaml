@@ -1,0 +1,12 @@
+---
+- hosts: cat9800pods
+  gather_facts: no
+
+  tasks:
+   - ios_command:
+      commands:
+      - show run | i netconf
+      - show version | i uptime
+      - show telemetry ietf subscription all
+     register: show
+   - debug: var=show.stdout_lines
