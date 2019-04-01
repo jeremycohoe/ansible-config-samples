@@ -1,0 +1,17 @@
+[all:vars]
+ansible_connection=local
+ansible_user=admin
+ansible_password=PASSWORD_HERE
+ansible_port=22
+
+[aireospods]
+Pod1 ansible_host=10.10.10.2
+Pod2 ansible_host=10.10.20.2
+Pod3 ansible_host=10.10.30.2
+Pod4 ansible_host=10.10.40.2
+Pod5 ansible_host=10.10.50.2
+Pod6 ansible_host=10.10.60.2
+Pod7 ansible_host=10.10.70.2
+Pod8 ansible_host=10.10.80.2
+Pod9 ansible_host=10.10.90.2
+Pod10 ansible_host=10.10.100.2
