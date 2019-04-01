@@ -1,0 +1,10 @@
+---
+- hosts: aireospods
+  gather_facts: no
+
+  tasks:
+   - aireos_command:
+      commands:
+       - show boot
+     register: show
+   - debug: var=show.stdout_lines
