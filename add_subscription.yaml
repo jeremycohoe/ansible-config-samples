@@ -1,0 +1,379 @@
+---
+- hosts: cat9300_4
+  gather_facts: no
+  connection: netconf
+  remote_user: USERNAME_HERE
+
+  tasks:
+  - name: establish subscription
+    netconf_config:
+      xml: |
+          <config>
+            <mdt-config-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg">
+              <mdt-subscription>
+                <subscription-id>501</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.60.0.19</source-address>
+                  <source-vrf>Mgmt-vrf</source-vrf>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>502</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.60.0.19</source-address>
+                  <source-vrf>Mgmt-vrf</source-vrf>
+                  <period>2000</period>
+                  <xpath>/memory-ios-xe-oper:memory-statistics/memory-statistic</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+
+              <mdt-subscription>
+                <subscription-id>503</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.60.0.19</source-address>
+                  <source-vrf>Mgmt-vrf</source-vrf>
+                  <period>2000</period>
+                  <xpath>/if:interfaces-state/interface[name="GigabitEthernet0/0"]/statistics</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>504</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.60.0.19</source-address>
+                  <source-vrf>Mgmt-vrf</source-vrf>
+                  <period>2000</period>
+                  <xpath>/interfaces-ios-xe-oper:interfaces/interface[name="GigabitEthernet0/0"]/statistics</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>505</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.60.0.19</source-address>
+                  <source-vrf>Mgmt-vrf</source-vrf>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>506</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.60.0.19</source-address>
+                  <source-vrf>Mgmt-vrf</source-vrf>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/one-minute</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>507</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.60.0.19</source-address>
+                  <source-vrf>Mgmt-vrf</source-vrf>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-minutes</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+            </mdt-config-data>
+          </config>
+
+
+- hosts: ISR_4k
+  gather_facts: no
+  connection: netconf
+  remote_user: USERNAME_HERE
+
+  tasks:
+  - name: establish subscription
+    netconf_config:
+      xml: |
+          <config>
+            <mdt-config-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg">
+              <mdt-subscription>
+                <subscription-id>501</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>502</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <period>2000</period>
+                  <xpath>/memory-ios-xe-oper:memory-statistics/memory-statistic</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>503</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <period>2000</period>
+                  <xpath>/if:interfaces-state/interface[name="GigabitEthernet0"]/statistics</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>504</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <period>2000</period>
+                  <xpath>/interfaces-ios-xe-oper:interfaces/interface[name="GigabitEthernet0"]/statistics</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>505</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>506</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/one-minute</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>507</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-minutes</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+            </mdt-config-data>
+          </config>
+
+
+
+- hosts: cat9800
+  gather_facts: no
+  connection: netconf
+  remote_user: USERNAME_HERE
+
+  tasks:
+  - name: establish subscription
+    netconf_config:
+      xml: |
+          <config>
+            <mdt-config-data xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mdt-cfg">
+              <mdt-subscription>
+                <subscription-id>501</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.12.252.223</source-address>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>502</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.12.252.223</source-address>
+                  <period>2000</period>
+                  <xpath>/memory-ios-xe-oper:memory-statistics/memory-statistic</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>503</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.12.252.223</source-address>
+                  <period>2000</period>
+                  <xpath>/if:interfaces-state/interface[name="GigabitEthernet1"]/statistics</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>504</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.12.252.223</source-address>
+                  <period>2000</period>
+                  <xpath>/interfaces-ios-xe-oper:interfaces/interface[name="GigabitEthernet1"]/statistics</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>505</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.12.252.223</source-address>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-seconds</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>506</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.12.252.223</source-address>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/one-minute</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+
+              <mdt-subscription>
+                <subscription-id>507</subscription-id>
+                <base>
+                  <stream>yang-push</stream>
+                  <encoding>encode-kvgpb</encoding>
+                  <source-address>10.12.252.223</source-address>
+                  <period>2000</period>
+                  <xpath>/process-cpu-ios-xe-oper:cpu-usage/cpu-utilization/five-minutes</xpath>
+                </base>
+                <mdt-receivers>
+                  <address>10.12.252.224</address>
+                  <port>57500</port>
+                  <protocol>grpc-tcp</protocol>
+                </mdt-receivers>
+              </mdt-subscription>
+            </mdt-config-data>
+          </config>
