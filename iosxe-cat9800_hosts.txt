@@ -1,0 +1,21 @@
+[all:vars]
+ansible_connection=network_cli
+ansible_network_os=ios
+ansible_user=USERNAME_HERE
+ansible_password=PASSWORD_HERE
+# Enable below if enable is required
+#ansible_become=yes
+#ansible_become_method=enable
+#ansible_become_pass=Cisco123
+
+[cat9800pods]
+Pod1 ansible_host=10.10.10.3
+Pod2 ansible_host=10.10.20.3
+Pod3 ansible_host=10.10.30.3
+Pod4 ansible_host=10.10.40.3
+Pod5 ansible_host=10.10.50.3
+Pod6 ansible_host=10.10.60.3
+Pod7 ansible_host=10.10.70.3
+Pod8 ansible_host=10.10.80.3
+Pod9 ansible_host=10.10.90.3
+Pod10 ansible_host=10.10.100.3
