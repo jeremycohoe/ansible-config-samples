@@ -1,0 +1,8 @@
+---
+- hosts: aireospods
+  gather_facts: no
+
+  tasks:
+   - aireos_config:
+      commands:
+       - mgmtuser add NEW_USERNAME_HERE PASSWORD_HERE read-write
