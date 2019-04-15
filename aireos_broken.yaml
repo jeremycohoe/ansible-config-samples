@@ -1,0 +1,36 @@
+---
+- hosts: "wlc"
+  connection: local
+  gather_facts: no
+#  become: yes
+#  become_method: enable
+
+  tasks:
+  - name: Show interface summary 1
+    aireos_command:
+      commands:
+        - command: grep exclude "management|service-port|redundancy-port|unused|virtual" "show interface summary"
+          prompt: "Press any key to continue"
+          answer: y
+    register: summary1
+  - name: Display Interface Summary 1
+    debug: var=summary1.stdout_lines
+
+  - name: Show boot
+    aireos_command:
+      commands:
+        - command: "show boot"
+    register: showboot
+  - name: Show boot
+    debug: var=showboot.stdout_lines
+
+
+  - name: Show interace summary 2
+    aireos_command:
+      commands:
+        - command: grep exclude "management|service-port|redundancy-port|unused|virtual" "show interface summary"
+          prompt: "Press any key to continue"
+          answer: y
+    register: summary2
+  - name: Display Interface Summary 2
+    debug: var=summary2.stdout_lines
