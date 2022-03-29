@@ -1,15 +1,38 @@
 ---
 - name: Configure enhanced security posture
-  hosts: PODx
+  hosts: VNC2
   gather_facts: no
   connection: network_cli
 
   tasks:
+
+    - name: Configure Syslog and Remove legacy EEM applet
+      ios_config:
+        lines:
+          - logging host 10.85.134.66 vrf Mgmt-vrf
+          - no event manager applet catchall
+        
+
+    - name: Enable EEM applet for monitoring
+      ios_config:
+        lines:
+          - event manager applet catchall
+          - event cli pattern ".*" sync no skip no
+          - action 1 syslog msg "$_cli_msg"
+          - end
+
+    - name: Remove legacy ACL if applied
+      ios_config:
+        lines:
+          - no ip access-list extended 103
+          - line vty 0 32
+          - no access-class 103 in
+
     - name: Configure ACL
       ios_config:
         lines:
-            - 10 deny ip host 99.99.99.99 any log
-            - 11 permit ip any any
+            - 11 permit ip 10.85.134.0 0.0.0.255 any
+            - 12 deny ip host 99.99.99.99 any log
         parents: ip access-list extended 103
         before: no ip access-list extended 103
         match: exact
@@ -19,5 +42,10 @@
         lines:
           - no service tcp-small-servers
           - no service udp-small-servers
-          - line vty 0 32
-          - access-class 103 in  
+          - line vty 30 32
+          - access-class 103 in 
+
+    - name: Save config
+      ios_command:
+        commands:
+          - wr mem
