@@ -1,0 +1,23 @@
+---
+- name: Configure enhanced security posture
+  hosts: PODx
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Configure ACL
+      ios_config:
+        lines:
+            - 10 deny ip host 99.99.99.99 any log
+            - 11 permit ip any any
+        parents: ip access-list extended 103
+        before: no ip access-list extended 103
+        match: exact
+
+    - name: Apply ACL and disable small servers
+      ios_config:
+        lines:
+          - no service tcp-small-servers
+          - no service udp-small-servers
+          - line vty 0 32
+          - access-class 103 in  
