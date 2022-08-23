@@ -1,3 +1,6 @@
+cisco@win10:~/ansible$ cat ansible.
+cat: ansible.: No such file or directory
+cisco@win10:~/ansible$ cat ansible.yaml
 ---
 - name: Configure all hosts
   hosts: POD
@@ -15,9 +18,9 @@
           - ip tcp window-size 65535
           - ip tftp blocksize 8192
           - ip domain name cisco.com
-          - ip domain lookup
-          - no ntp server 10.81.254.202
-          - ntp server 198.18.128.1
+          - ip name-server 198.18.133.1
+          - ip name-server 198.18.128.1
+          - ip domain lookup source-interface GigabitEthernet 0/0
           - ntp server 198.18.128.1 source GigabitEthernet0/0
           - timezone pacific -7
           - no event manager applet catchall
@@ -25,6 +28,7 @@
           - restconf
           - ip scp server enable
           - logging host 198.18.133.252 vrf Mgmt-vrf
+          - ip scp server enable
           - ip http secure-server
     - name: Configure EEM applet
       ios_config:
@@ -63,12 +67,11 @@
   - name: BACKUP CONFIG
     ios_command:
       commands:
-        - command: 'copy running-config {{TFTP}}{{TFTP_IP}}/{{FOLDER}}/{{FILENAME}}-{{time}}-{{timetwo}}.txt vrf Mgmt-vrf'
+        - command: 'copy running-config {{TFTP}}{{TFTP_IP}}/{{FOLDER}}/{{FILENAME}}-{{time}}-{{timetwo}}.txt vrf Mgmt
+-vrf'
           check_all: False
           prompt:
             - "Address or name of remote host [{{ TFTP_IP }}]?"
           answer:
             - "\r"
             - "\r"
-            - "\n"
-
