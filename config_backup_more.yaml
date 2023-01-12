@@ -1,0 +1,74 @@
+---
+- name: Configure all hosts
+  hosts: POD
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Configure CLI's
+      ios_config:
+        lines:
+          - line vty 0 32
+          - transport input all
+          - exec-timeout 0 0
+          - snmp-server community RW rw
+          - ip tcp window-size 65535
+          - ip tftp blocksize 8192
+          - ip domain name cisco.com
+          - ip name-server 198.18.133.1
+          - ip name-server 198.18.128.1
+          - ip domain lookup source-interface GigabitEthernet 0/0
+          - ntp server 198.18.128.1 source GigabitEthernet0/0
+          - timezone pacific -7
+          - no event manager applet catchall
+          - netconf-yang
+          - restconf
+          - ip scp server enable
+          - logging host 198.18.133.252 vrf Mgmt-vrf
+          - ip scp server enable
+          - ip http secure-server
+    - name: Configure EEM applet
+      ios_config:
+        lines:
+          - event manager applet catchall
+          - event cli pattern ".*" sync no skip no
+          - action 1 syslog msg "$_cli_msg"
+          - end
+
+- name: save
+  hosts: POD
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Save config
+      tags: save
+      ios_command:
+        commands:
+          - wr mem
+
+- name: Backup config to TFTP
+  hosts: POD
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    #IOS_FILE: default_config.txt
+    TFTP: 'tftp://'
+    TFTP_IP: '198.18.133.252'
+    FOLDER: '/'
+    time: "{{ lookup('pipe', 'date +\"%Y%m%d\"') }}"
+    timetwo: "{{ lookup('pipe', 'date +\"%s\"') }}"
+    FILENAME: '{{ inventory_hostname }}-config'
+
+  tasks:
+  - name: BACKUP CONFIG
+    ios_command:
+      commands:
+        - command: 'copy running-config {{TFTP}}{{TFTP_IP}}/{{FOLDER}}/{{FILENAME}}-{{time}}-{{timetwo}}.txt vrf Mgmt-vrf'
+          check_all: False
+          prompt:
+            - "Address or name of remote host [{{ TFTP_IP }}]?"
+          answer:
+            - "\r"
+            - "\r"
+            - "\n"
