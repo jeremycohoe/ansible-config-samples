@@ -1,5 +1,5 @@
 ---
-- name: upgrade on switches
+- name: BACKUP CONFIG ON ALL HOSTS
   hosts: all
   gather_facts: no
   connection: network_cli
