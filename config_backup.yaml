@@ -1,0 +1,24 @@
+---
+- name: upgrade on switches
+  hosts: all
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    TFTP: 'tftp://'
+    TFTP_IP: '10.85.134.66'
+    FOLDER: 'config_backup_folder'
+    FILENAME: '{{ inventory_hostname }}-default_config_2022nov17.txt'
+
+  tasks:
+  - name: BACKUP CONFIG
+    ios_command:
+      commands:
+        - command: 'copy running-config {{TFTP}}{{TFTP_IP}}/{{FOLDER}}/{{FILENAME}}'
+          check_all: False
+          prompt:
+            - "Address or name of remote host [{{ TFTP_IP }}]?"
+          answer:
+            - "\r"
+            - "\r"
+            - "\n"
